@@ -14,12 +14,8 @@ class monitor;
     task run();
 
         forever begin
-
             @(posedge vif.clk);
-            #1;
-
             pkt = new();
-
             pkt.start = vif.start;
             pkt.A     = vif.A;
             pkt.B     = vif.B;
@@ -31,7 +27,7 @@ class monitor;
             m2c.put(pkt);
 
             // Send to scoreboard ONLY when result is ready
-            if (pkt.done == 1'b1)
+            if (pkt.done == 1'b1) //main condition for the code, without this synchronization will be faild
                 m2s.put(pkt);
 
         end
